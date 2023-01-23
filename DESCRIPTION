@@ -1,0 +1,25 @@
+Package: rosyicd10
+Title: Rosy ICD-10 Shiny App Package
+Version: 0.0.0.9000
+Authors@R: person('Brandon', 'Rose', email = 'thecodingdocs@gmail.COM', role = c('cre', 'aut'))
+Description: Explore ICD-10 Apps and Export.
+License: MIT + file LICENSE
+URL: https://github.com/brandonerose/rosyicd10
+BugReports: https://github.com/brandonerose/rosyicd10/issues
+Depends: 
+    R (>= 2.10)
+Imports: 
+    config (>= 0.3.1),
+    DT,
+    golem (>= 0.3.5),
+    magrittr,
+    shiny (>= 1.7.4),
+    shinydashboard
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 7.2.3
