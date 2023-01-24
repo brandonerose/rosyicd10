@@ -24,6 +24,17 @@ app_ui <- function(request) {
               tags$img(src = "www/logo.png", width="80%")
             )
           ),
+
+          fluidRow(
+            column(
+              12,
+              shiny::actionButton(
+                inputId='ab1',
+                label="Donate!",
+                icon = icon("dollar"),
+                onclick ="window.open('https://account.venmo.com/u/brandonerose', '_blank')"),
+              align="center")
+          ),
           fluidRow(
             column(
               12,

@@ -44,6 +44,9 @@ The rosyicd10 package (to run the app locally) is at
 See instructions above. Install remotes, install rosyicd10, and
 run_app()
 
+Donate if I helped you out and want more development (anything helps)!
+[account.venmo.com/u/brandonerose](https://account.venmo.com/u/brandonerose "Venmo Donation")
+
 The simple example shiny app (for learning shiny) is at
 [github.com/brandonerose/rosyicd10_simple](https://github.com/brandonerose/rosyicd10_simple "rosyicd10 R project")
 Just download the entire folder, open it as an R project, and run the
