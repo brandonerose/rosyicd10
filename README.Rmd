@@ -32,6 +32,7 @@ remotes::install_github("brandonerose/rosyicd10")
 
 ```
 
+If you have any issues above download the most recent version of R at RStudtio and update all packages in RStudio. See [thecodingdocs.com/r/getting-started](https://www.thecodingdocs.com/r/getting-started "R Getting Started").
 
 ## Run
 
@@ -69,6 +70,14 @@ I custom made this data.frame in R. If you're interested let me know and I can s
 ```{r icd10, eval=T}
 library("rosyicd10")
 
-kableExtra::kable(ICD10[1:100, ])#first 100 rows
+kableExtra::kable(ICD10[1:10, ])# show first 10 rows
+```
+
+You can find the raw CSV at [github.com/brandonerose/rosyicd10_simple/blob/main/ICD10_dataframe.csv](https://github.com/brandonerose/rosyicd10_simple/blob/main/ICD10_dataframe.csv "ICD10 CSV") 
+
+You can also load the csv directly into R without installing the rosyicd10 package ...
+
+```{r csv, eval=F}
+ICD10<-read.csv("https://raw.githubusercontent.com/brandonerose/rosyicd10_simple/main/ICD10_dataframe.csv",stringsAsFactors = F)
 ```
 

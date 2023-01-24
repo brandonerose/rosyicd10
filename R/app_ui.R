@@ -97,6 +97,16 @@ app_ui <- function(request) {
               uiOutput("remove_all1"),
               align="center")
           ),
+          fluidRow(
+            column(
+              12,
+              p("This app is still in development."),
+              p("Consider donating for more."),
+              p("Contact with issues."),
+              p("Consider using R package."),
+              align="center"
+            )
+          ),
           textOutput("text_check")
         )
       ),
@@ -111,6 +121,7 @@ app_ui <- function(request) {
               choices = unique(ICD10$level),
               selected = unique(ICD10$level)
             )),
+            h1("Select your codes here. Use filter as well!"),
             fluidRow(
               DT::DTOutput("all_table")
             ),
