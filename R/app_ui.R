@@ -69,8 +69,8 @@ app_ui <- function(request) {
               align="center")
           ),
 
-          div(style="text-align:center",p(paste0('Version: 1.0.0'))),
-          div(style="text-align:center",p(paste0('Last Updated: 1/23/23'))),
+          div(style="text-align:center",p(paste0('Version: ',utils::packageVersion(.packageName)))),
+          div(style="text-align:center",p(paste0('Last Updated: ',Sys.Date()))),
           menuItem("All ICD-10s", tabName = "all_tab"),
           menuItem("Chapters", tabName = "chapter_tab"),
           menuItem("Sections", tabName = "section_tab"),

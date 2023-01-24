@@ -4,6 +4,7 @@
 .Ruserdata
 /dev/
 /data-raw/
+/rsconnect/
 .Rdata
 .httr-oauth
 .DS_Store
