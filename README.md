@@ -22,7 +22,7 @@ You can install the development version of rosyicd10 like so:
 remotes::install_github("brandonerose/rosyicd10")
 ```
 
-## Example
+## Run
 
 This is how you launch the app locally!
 
@@ -32,9 +32,28 @@ library(rosyicd10)
 run_app()
 ```
 
-The rosyicd10 package to run the app locally is at [I’m an inline-style
-link with
-title](https://github.com/brandonerose/rosyicd10 "Google's Homepage")
+## Links
 
-You can find a simpler, stand-alone version of the app for learning
-purposes at
+The LIVE website (to run the live app) is at
+[brandonerose.shinyapps.io/rosyicd10/](https://brandonerose.shinyapps.io/rosyicd10/ "rosyicd10 app")
+If the website gets too much traffic you may need to install the current
+version yourself below.
+
+The rosyicd10 package (to run the app locally) is at
+[github.com/brandonerose/rosyicd10](https://github.com/brandonerose/rosyicd10 "rosyicd10 R package")
+See instructions above. Install remotes, install rosyicd10, and
+run_app()
+
+The simple example shiny app (for learning shiny) is at
+[github.com/brandonerose/rosyicd10_simple](https://github.com/brandonerose/rosyicd10_simple "rosyicd10 R project")
+Just download the entire folder, open it as an R project, and run the
+app.R (make sure you have all library packages installed)
+
+For more R coding visit
+[thecodingdocs.com/](https://www.thecodingdocs.com/ "TheCodingDocs.com")
+
+Follow us on Twitter
+[twitter.com/TheCodingDocs](https://twitter.com/TheCodingDocs "TheCodingDocs Twitter")
+
+Follow me on Twitter
+[twitter.com/BRoseMDMPH](https://twitter.com/BRoseMDMPH "BRoseMDMPH Twitter")
