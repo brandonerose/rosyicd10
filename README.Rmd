@@ -69,6 +69,6 @@ I custom made this data.frame in R. If you're interested let me know and I can s
 ```{r icd10, eval=T}
 library("rosyicd10")
 
-ICD10[1:100, ]#first 100 rows
+kableExtra::kable(ICD10[1:100, ])#first 100 rows
 ```
 
