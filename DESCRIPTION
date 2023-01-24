@@ -1,6 +1,6 @@
 Package: rosyicd10
 Title: Rosy ICD-10 Shiny App Package
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Brandon", "Rose", , "thecodingdocs@gmail.COM", role = c("cre", "aut"))
 Description: Explore ICD-10 Apps and Export.
