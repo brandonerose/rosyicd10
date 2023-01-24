@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# rosyicd10 <img src="man/figures/logo_hex.png" align="right" height="200" />
+# rosyicd10 <img src="man/figures/logo.png" align="right" height="200" />
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -37,13 +37,13 @@ remotes::install_github("brandonerose/rosyicd10")
 
 This is how you launch the app locally!
 
-```{r example}
+```{r example, eval=FALSE}
 library(rosyicd10)
 
 run_app()
 ```
 
-The rosyicd10 package to run the app locally is at [](https://github.com/brandonerose/rosyicd10)
+The rosyicd10 package to run the app locally is at [I'm an inline-style link with title](https://github.com/brandonerose/rosyicd10 "Google's Homepage")
 
 
 You can find a simpler, stand-alone version of the app for learning purposes at 

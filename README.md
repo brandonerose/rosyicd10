@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rosyicd10 <img src="man/figures/logo_hex.png" align="right" height="200" />
+# rosyicd10 <img src="man/figures/logo.png" align="right" height="200" />
 
 <!-- badges: start -->
 
@@ -30,15 +30,11 @@ This is how you launch the app locally!
 library(rosyicd10)
 
 run_app()
-#> Loading required package: shiny
-#> 
-#> Listening on http://127.0.0.1:8987
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
-
-The rosyicd10 package to run the app locally is at
-[](https://github.com/brandonerose/rosyicd10)
+The rosyicd10 package to run the app locally is at [I’m an inline-style
+link with
+title](https://github.com/brandonerose/rosyicd10 "Google's Homepage")
 
 You can find a simpler, stand-alone version of the app for learning
 purposes at
