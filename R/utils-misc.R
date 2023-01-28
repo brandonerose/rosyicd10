@@ -14,7 +14,7 @@
 NULL
 
 pkg_name<-.packageName
-pkg_version<-utils::packageVersion(.packageName) %>% as.character()
+pkg_version<-as.character(utils::packageVersion(.packageName))
 pkg_date<-Sys.Date()
 
 
