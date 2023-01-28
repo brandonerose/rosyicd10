@@ -10,136 +10,92 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    dashboardPage(
-      dashboardHeader(
-        title = "rosyicd10"
+    shinydashboardPlus::dashboardPage(
+      options = list(
+        sidebarExpandOnHover = F
       ),
-      dashboardSidebar(
-        sidebarMenu(
-          div(
-            style="text-align:center",
-            tags$a(
-              href="https://thecodingdocs.com",
-              target="_blank",
-              tags$img(src = "www/logo.png", width="80%")
-            )
-          ),
-
-          fluidRow(
-            column(
-              12,
-              shiny::actionButton(
-                inputId='ab1',
-                label="Donate!",
-                icon = icon("dollar"),
-                onclick ="window.open('https://account.venmo.com/u/brandonerose', '_blank')"),
-              align="center")
-          ),
-          fluidRow(
-            column(
-              12,
-              shiny::actionButton(
-                inputId='ab1',
-                label="TheCodingDocs.com",
-                icon = icon("stethoscope"),
-                onclick ="window.open('https://thecodingdocs.com', '_blank')"),
-              align="center")
-          ),
-          fluidRow(
-            column(
-              12,
-              shiny::actionButton(
-                inputId='ab2',
-                label="GitHub Code",
-                icon = icon("github"),
-                onclick ="window.open('https://github.com/brandonerose/rosyicd10', '_blank')"
-              ),
-              align="center")
-          ),
-          fluidRow(
-            column(
-              12,
-              shiny::actionButton(
-                inputId='ab3',
-                label="TheCodingDocs Twitter",
-                icon = icon("twitter"),
-                onclick ="window.open('https://twitter.com/TheCodingDocs', '_blank')"
-              ),
-              align="center"
-            )
-          ),
-          fluidRow(
-            column(
-              12,
-              shiny::actionButton(
-                inputId='ab4',
-                label="BRoseMDMPH Twitter",
-                icon = icon("square-twitter"),
-                onclick ="window.open('https://twitter.com/BRoseMDMPH', '_blank')"
-              ),
-              align="center")
-          ),
-
-          div(style="text-align:center",p(paste0('Version: ',utils::packageVersion(.packageName)))),
-          div(style="text-align:center",p(paste0('Last Updated: ',Sys.Date()))),
-          menuItem("All ICD-10s", tabName = "all_tab"),
-          menuItem("Chapters", tabName = "chapter_tab"),
-          menuItem("Sections", tabName = "section_tab"),
-          menuItem("Level 1s", tabName = "level1_tab"),
-          menuItem("Level 2s", tabName = "level2_tab"),
-          menuItem("Level 3s", tabName = "level3_tab"),
-          menuItem("Level 4s", tabName = "level4_tab"),
-          menuItem("Level 5s", tabName = "level5_tab"),
-          shinydashboard::valueBoxOutput("vb1",width = 12),
-          fluidRow(
-            column(
-              12,
-              uiOutput("remove_all1"),
-              align="center")
-          ),
-          fluidRow(
-            column(
-              12,
-              p("This app is still in development."),
-              p("Consider donating for more."),
-              p("Contact with issues."),
-              p("Consider using R package."),
-              align="center"
-            )
-          ),
-          textOutput("text_check")
-        )
-      ),
-      dashboardBody(
-        tabItems(
-          tabItem(
-            tabName = "all_tab",
-            fluidRow(checkboxGroupInput(
+      header = shinydashboardPlus::dashboardHeader(
+        fixed = T,
+        title = tagList(
+          span(class = "logo-lg", .packageName),
+          tags$a(
+            href="https://thecodingdocs.com",
+            target="_blank",
+            tags$img(src = "www/logo.png", width="100%")
+          )
+        ),
+        # titleWidth=0,
+        leftUi = tagList(
+          shinydashboardPlus::dropdownBlock(
+            id = "controls",
+            title = "Controls",
+            icon = shiny::icon("sliders"),
+            checkboxGroupInput(
               "level",
-              "Level(s): ",
+              "ICD10 Level(s): ",
               inline = T,
               choices = unique(ICD10$level),
               selected = unique(ICD10$level)
-            )),
-            h1("Select your codes here. Use filter as well!"),
-            fluidRow(
-              DT::DTOutput("all_table")
-            ),
+            )
+          )
+        )
+      ),
+      sidebar = shinydashboardPlus::dashboardSidebar(
+        minified = F,
+        collapsed = F,
+        disable =F,
+        TCD_SBH(),
+        shinydashboard::valueBoxOutput("vb1",width = 12),
+        fluidRow(
+          column(
+            12,
+            uiOutput("remove_all1"),
+            align="center")
+        ),
+        textOutput("text_check"),
+        TCD_SBF()
+      ),
+      body = dashboardBody(
+        br(),
+        br(),
+        fluidRow(
+          box(
+            title = h1("1. Select your codes here!"),
+            width = 8,
+            p("Use the filters on the top of the table!"),
+            DT::DTOutput("all_table"),
             fluidRow(
               column(
                 12,
                 uiOutput("add"),
-                align="center")
+                align="center"
+              )
             ),
             fluidRow(
               column(
                 12,
                 uiOutput("downloadData_all"),
-                align="center")
+                align="center"
+              )
+            )
+          ),
+          box(
+            title = h1("Highlighted Code"),
+            width = 4,
+            fluidRow(
+              valueBoxOutput("vb2",width = 6),valueBoxOutput("vb3",width = 6)
             ),
-
-            h2("Selected Codes"),
-            fluidRow(DT::DTOutput("selected_table")),
+            listviewer::jsoneditOutput("selected_list"),
+            fluidRow(
+              p("In the future I can add a function for adding children?")
+              # uiOutput("add_children_selected")
+            )
+          ),
+          box(
+            title = h1("2. Selected Codes!"),
+            width = 12,
+            p("Download at the bottom!"),
+            DT::DTOutput("selected_table"),
             fluidRow(
               column(
                 12,
@@ -152,40 +108,30 @@ app_ui <- function(request) {
                 uiOutput("remove_all2"),
                 align="center")
             ),
-
             uiOutput("downloadData_selected")
 
           ),
-          tabItem(
-            tabName = "chapter_tab",
-            fluidRow(DT::DTOutput("chapter_table"))
-          ),
-          tabItem(
-            tabName = "section_tab",
-            fluidRow(DT::DTOutput("section_table"))
-          ),
-          tabItem(
-            tabName = "level1_tab",
-            fluidRow(DT::DTOutput("level1_table"))
-          ),
-          tabItem(
-            tabName = "level2_tab",
-            fluidRow(DT::DTOutput("level2_table"))
-          ),
-          tabItem(
-            tabName = "level3_tab",
-            fluidRow(DT::DTOutput("level3_table"))
-          ),
-          tabItem(
-            tabName = "level4_tab",
-            fluidRow(DT::DTOutput("level4_table"))
-          ),
-          tabItem(
-            tabName = "level5_tab",
-            fluidRow(DT::DTOutput("level5_table"))
+        )
+
+      ),
+      controlbar = shinydashboardPlus::dashboardControlbar(
+        TCD_SBH(),
+        div(style="text-align:center",p(paste0('Version: ',pkg_version))),
+        div(style="text-align:center",p(paste0('Last Updated: ',pkg_date))),
+        TCD_SBF(),
+        fluidRow(
+          column(
+            12,
+            p("This app is still in development."),
+            p("Consider donating for more."),
+            p("Contact with issues."),
+            p("Consider using R package."),
+            align="center"
           )
         )
       ),
+      title = "",
+      footer = TCD_NF(),
       skin = "green"
     )
   )

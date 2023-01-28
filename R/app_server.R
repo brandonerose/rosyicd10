@@ -9,38 +9,20 @@ app_server <- function(input, output, session) {
   # table<-reactive(ICD10[which(ICD10$level%in%input$level),])
   values<-reactiveValues()
   values$codes<-NULL
+  values$selected<-NULL
+  values$level<-NULL
+  values$level_clean<-NULL
   # tables------
   output$all_table<-DT::renderDT({
     ICD10[which(ICD10$level%in%input$level),] %>% make_table()
   })
-  output$chapter_table<-DT::renderDT({
-    ICD10c %>% make_table()
-  })
-  output$section_table<-DT::renderDT({
-    ICD10s %>% make_table()
-  })
-  output$level1_table<-DT::renderDT({
-    ICD10l1 %>% make_table()
-  })
-  output$level2_table<-DT::renderDT({
-    ICD10l2 %>% make_table()
-  })
-  output$level3_table<-DT::renderDT({
-    ICD10l3 %>% make_table()
-  })
-  output$level4_table<-DT::renderDT({
-    ICD10l4 %>% make_table()
-  })
-  output$level5_table<-DT::renderDT({
-    ICD10l5 %>% make_table()
-  })
   output$selected_table<-DT::renderDT({
-    ICD10[which(ICD10$code%in%values$codes),] %>% make_table()
+    ICD10[which(ICD10$code%in%values$codes),] %>% make_table(selection="multiple")
   })
-  #text-----
+  # text-----
   output$text_check<-renderText({
-    # values$codes
-    })
+    # as.character(input$all_table_cell_clicked)
+  })
   # ui --------
   output$add<-renderUI({
     actionButton("add_",paste0("Add Above Rows (", formatC(length(input$all_table_rows_all), format="d", big.mark=","),")"))
@@ -60,7 +42,10 @@ app_server <- function(input, output, session) {
   output$downloadData_selected<-renderUI({
     downloadButton('downloadData_selected_', paste0('Download Above Report (',formatC(length(values$codes), format="d", big.mark=","),")"), style="display: block; margin: 0 auto; width: 230px;color: black;")
   })
-  #observes------
+  # output$add_children_selected<-renderUI({
+  #   actionButton('add_children_selected_', paste0('Add above children (',formatC(length(values$codes), format="d", big.mark=","),")"), style="display: block; margin: 0 auto; width: 230px;color: black;")
+  # })
+  # observes------
 
   output$downloadData_all_ <- downloadHandler(
     filename = function() {
@@ -81,31 +66,31 @@ app_server <- function(input, output, session) {
     input$remove_all1_
     input$remove_all2_
     values$codes<-NULL
+    values$selected<-NULL
+    values$level<-NULL
+    values$level_clean<-NULL
   })
   observeEvent(input$all_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10$code[which(ICD10$level%in%input$level)][input$all_table_rows_selected])  %>% drop_if(c("",NULL,NA,"NA",as.character(1:30)))%>% unique()
+    values$selected<-ICD10$code[which(ICD10$level%in%input$level)][input$all_table_rows_selected]
+    values$level<-ICD10$level[which(ICD10$level%in%input$level)][input$all_table_rows_selected]
+    if(values$level=="diag1"){
+      values$level_clean<-"1"
+    }
+    if(values$level=="diag2"){
+      values$level_clean<-"2"
+    }
+    if(values$level=="diag3"){
+      values$level_clean<-"3"
+    }
+    if(values$level=="diag4"){
+      values$level_clean<-"4"
+    }
+    if(values$level=="diag5"){
+      values$level_clean<-"5"
+    }
+    values$codes<-values$codes %>% append(values$selected)  %>% drop_if(c("",NULL,NA,"NA",as.character(1:30)))%>% unique()
   })
-  observeEvent(input$chapter_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10c$code[input$chapter_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$section_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10s$code[input$section_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$level1_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10l1$code[input$level1_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$level2_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10l2$code[input$level2_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$level3_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10l3$code[input$level3_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$level4_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10l4$code[input$level4_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
-  observeEvent(input$level5_table_rows_selected,ignoreInit = T,{
-    values$codes<-values$codes %>% append(ICD10l5$code[input$level5_table_rows_selected]) %>% drop_if(c("",NULL,NA,"NA",as.character(1:30))) %>% unique()
-  })
+
   observeEvent(input$add_,ignoreInit = T,{
     values$codes<-values$codes %>% append(ICD10[which(ICD10$level%in%input$level),]$code[input$all_table_rows_all])  %>% drop_if(c("",NULL,NA,"NA",as.character(1:30)))%>% unique()
   })
@@ -113,11 +98,71 @@ app_server <- function(input, output, session) {
     values$codes<-values$codes[which(!values$codes%in%ICD10$code[which(ICD10$code%in%values$codes)][input$selected_table_rows_selected])]
   })
 
-  #valuebox -------
+  # valuebox -------
   output$vb1<-shinydashboard::renderValueBox({
     shinydashboard::valueBox(
       value = values$codes %>% length(),
       subtitle = "Selected Codes", width = 12
     )
   })
+  output$vb2<-shinydashboard::renderValueBox({
+    shinydashboard::valueBox(
+      value = values$selected,
+      subtitle = "Selected Code"
+    )
+  })
+  output$vb3<-shinydashboard::renderValueBox({
+    shinydashboard::valueBox(
+      value = values$level_clean ,
+      subtitle = "Selected Level"
+    )
+  })
+  # list -----
+  output$selected_list<-listviewer::renderJsonedit({
+
+
+    x<-NULL
+    if(
+      values$level%in%c(
+        "diag1",
+        "diag2",
+        "diag3",
+        "diag4",
+        "diag5"
+      )
+    ){
+      if(values$level=="diag1"){
+        x<-listviewer::jsonedit(
+          mode="view",
+          ICD10_list[values$selected]
+        ) %>% htmlwidgets::onRender("function(el,x,data) {this.editor.expandAll();}")
+      }
+      if(values$level=="diag2"){
+        x<-listviewer::jsonedit(
+          mode="view",
+          ICD10_list[[values$selected %>% strtrim(3)]][values$selected]
+        ) %>% htmlwidgets::onRender("function(el,x,data) {this.editor.expandAll();}")
+      }
+      if(values$level=="diag3"){
+        x<-listviewer::jsonedit(
+          mode="view",
+          ICD10_list[[values$selected %>% strtrim(3)]][[values$selected %>% strtrim(5)]][values$selected]
+        ) %>% htmlwidgets::onRender("function(el,x,data) {this.editor.expandAll();}")
+      }
+      if(values$level=="diag4"){
+        x<-listviewer::jsonedit(
+          mode="view",
+          ICD10_list[[values$selected %>% strtrim(3)]][[values$selected %>% strtrim(5)]][[values$selected %>% strtrim(6)]][values$selected]
+        ) %>% htmlwidgets::onRender("function(el,x,data) {this.editor.expandAll();}")
+      }
+      if(values$level=="diag5"){
+        x<-listviewer::jsonedit(
+          mode="view",
+          ICD10_list[[values$selected %>% strtrim(3)]][[values$selected %>% strtrim(5)]][[values$selected %>% strtrim(6)]][[values$selected %>% strtrim(5)]][[values$selected %>% strtrim(7)]][values$selected]
+        ) %>% htmlwidgets::onRender("function(el,x,data) {this.editor.expandAll();}")
+      }
+    }
+    x
+  })
+
 }
