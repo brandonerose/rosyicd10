@@ -13,13 +13,18 @@
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
+pkg_name<-.packageName
+pkg_version<-utils::packageVersion(.packageName) %>% as.character()
+pkg_date<-Sys.Date()
+
+
 drop_if <- function(x,drops) {
   x[which(!x%in%drops)]
 }
 
-make_table<-function(DF){
+make_table<-function(DF,selection="single"){
   DT::datatable(DF,
-                selection = "multiple",
+                selection = selection,
                 editable = F,
                 rownames = F,
                 # extensions = 'Buttons',
@@ -29,7 +34,7 @@ make_table<-function(DF){
                   pageLength = 50,
                   fixedColumns = TRUE,
                   ordering = TRUE,
-                  scrollY = "500px",
+                  scrollY = "300px",
                   scrollX = T,
                   # autoWidth = T,
                   searching = T,
