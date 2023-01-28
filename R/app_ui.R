@@ -86,10 +86,11 @@ app_ui <- function(request) {
               valueBoxOutput("vb2",width = 6),valueBoxOutput("vb3",width = 6)
             ),
             listviewer::jsoneditOutput("selected_list"),
-            fluidRow(
-              p("In the future I can add a function for adding children?")
-              # uiOutput("add_children_selected")
-            )
+            p("In the future I can add a function for adding children?")
+            # fluidRow(
+            #
+            #   # uiOutput("add_children_selected")
+            # )
           ),
           box(
             title = h1("2. Selected Codes!"),
