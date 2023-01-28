@@ -1,0 +1,14 @@
+
+.sticky_footer {
+  position:fixed;
+  bottom:0;
+  right:0;
+  left:0;
+}
+
+.h1, h1{
+  color: #000000;
+  font-weight: bold;
+  font-size: 36px;
+  text-align: center;
+}
